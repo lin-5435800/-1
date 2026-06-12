@@ -1,0 +1,36 @@
+# 工作流的名称
+name: CI/CD Pipeline
+
+# 触发条件：当推送到 main 分支时触发
+on:
+  push:
+    branches: [ main ]
+
+# 定义任务
+jobs:
+  build:
+    # 运行环境：使用最新的 Ubuntu 虚拟机
+    runs-on: ubuntu-latest
+
+    # 具体的执行步骤
+    steps:
+      # 第一步：检出代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 第二步：打印一句话（测试用）
+      - name: Run a one-line script
+        run: echo Hello, world!
+        
+      - name: Setup Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          # 指定安装 Python 3.9 版本
+          python-version: '3.9'
+    
+          # 启用 pip 缓存，如果依赖文件没变，下次运行会直接用缓存，不用重新下载
+          cache: 'pip'
+    
+          # 可选：指定架构（默认通常是 x64，除非你有特殊需求）
+          architecture: 'x64'
+        
